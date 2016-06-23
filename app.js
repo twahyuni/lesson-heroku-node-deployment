@@ -9,7 +9,8 @@ var app = express();
 var router = express.Router()
 
 var moongoose = require('mongoose');
-moongoose.connect('mongodb://localhost/animalshelter');
+var mongoUri =  process.env.MONGODB_URI || 'mongodb://localhost/animalshelter';
+moongoose.connect(mongoUri);
 
 
 app.use(logger('dev'));
@@ -19,8 +20,7 @@ app.use(expressLayouts)
 app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-app.listen(3000)
-
+app.listen(process.env.PORT || 3000 );
 
 require("./models/animal");
 var Animal = moongoose.model("Animal");
